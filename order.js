@@ -3,15 +3,18 @@ import assert from 'assert';
 
 
 export default class Contract {
-  static limit(data) {
+  static limit(data, transmit, parentId) {//transmit true or false for bracket orders. true to send order straight away, false to idle
     assert(data.action);
     assert(data.totalQuantity > 0);
-    assert(data.lmtPrice > 0);
+    //assert(data.lmtPrice > 0);
 
     return Contract._toOrder(data, 'LMT', {
-      transmit: true,
-      openClose: 'O',
-	    tif: 'DAY',
+      transmit: transmit,
+      //openClose: 'O',
+	    tif: 'GTC',
+      parentId: parentId,
+      ocaType: 1
+      //percentOffset: percentOffset
       /*
       origin: 0,
       parentId: 0,
@@ -42,14 +45,25 @@ export default class Contract {
     });
   }
 
+  static relative(data, transmit, parentId, offset){
+
+    return Contract._toOrder(data, 'REL', {
+      parentId: parentId,
+      transmit: transmit,
+	    tif: 'GTC',
+      ocaType: 1,
+      percentOffset: offset
+    });
+  }
 
 
-  static market(data) {
+
+  static market(data, transmit) {
     assert(data.action);
     assert(data.totalQuantity > 0);
 
     return Contract._toOrder(data, 'MKT', {
-      transmit: true,
+      transmit: transmit,
       goodAfterTime: '',
       goodTillDate: ''
     });
@@ -57,15 +71,17 @@ export default class Contract {
 
 
 
-  static stop(data) {
+  static stop(data, transmit, parentId) {
     assert(data.action);
     assert(data.totalQuantity > 0);
-    assert(data.auxPrice > 0);
+    //assert(data.auxPrice > 0);
 
     return Contract._toOrder(data, 'STP', {
-      transmit: true,
-      parentId: 0,
-      tif: 'DAY'
+      transmit: transmit,
+      tif: 'GTC',
+      parentId: parentId,
+      ocaType: 1
+      //percentOffset: percentOffset
     });
   }
 

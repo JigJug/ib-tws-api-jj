@@ -325,10 +325,8 @@ export default {
     let items = [];
 
     for (let n = 0; n < numberOfElements; n++) {
-      let item = {
-        contractDetails: {
-          contract: {}
-        },
+      item = {
+        contractDetails: {},
         rank: parseInt(fields.shift())
       };
 
@@ -336,7 +334,7 @@ export default {
       item.contractDetails.contract.symbol = fields.shift();
       item.contractDetails.contract.secType = fields.shift();
       item.contractDetails.contract.lastTradeDateOrContractMonth = fields.shift();
-      item.contractDetails.contract.strike = parseFloat(fields.shift());
+      item.contractDetails.contract.strike = decode(float, fields)
       item.contractDetails.contract.right = fields.shift();
       item.contractDetails.contract.exchange = fields.shift();
       item.contractDetails.contract.currency = fields.shift();
@@ -350,7 +348,7 @@ export default {
       items.push(item);
     }
 
-    this.requestIdEmit(requestId, 'tick', items);
+    this.requestIdResolve(requestId, items);
   },
 
 

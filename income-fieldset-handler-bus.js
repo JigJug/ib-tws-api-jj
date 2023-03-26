@@ -131,12 +131,18 @@ class IncomeFieldsetHandlerBus {
   requestIdEmit(requestId, event, value) {
     debuglog('emit event. requestId ' + requestId + ', event ' + event);
     debuglog(value);
+    console.log('WE HAVE DATA !!!!!!! ',value)
+    console.log('EVENT: ',event)
+
+    if(value.message == 'Requested market data is not subscribed. Displaying delayed market data.' != -1) {
+      return
+    }
 
     if (!this._requestIdData[requestId]) {
       debuglog('this requestId not awaited');
       return;
     }
-
+    //HAD TO IGNORE THE ERRORS BEC GETTING ERROR AND DATA AT THE SAME TIME - COMES IN SERIES OF 10 EVENTS.. ERROR CAME FIRST FOLLOWED BY DATA
     if (event == 'error' &&
         Object.keys(this._requestIdData[requestId].rejects).length) {
       if (this._requestIdData[requestId].resolveOnErrorCode == value.code) {
