@@ -85,6 +85,20 @@ export default class Contract {
     });
   }
 
+  static trail(data, transmit, parentId) {
+    assert(data.action);
+    assert(data.totalQuantity > 0);
+    //assert(data.auxPrice > 0);
+
+    return Contract._toOrder(data, 'TRAIL', {
+      transmit: transmit,
+      tif: 'GTC',
+      parentId: parentId,
+      ocaType: 1
+      //percentOffset: percentOffset
+    });
+  }
+
 
 
   static _toOrder(data, orderType, defaults) {
