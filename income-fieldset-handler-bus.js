@@ -131,8 +131,8 @@ class IncomeFieldsetHandlerBus {
   requestIdEmit(requestId, event, value) {
     debuglog('emit event. requestId ' + requestId + ', event ' + event);
     debuglog(value);
-    console.log('WE HAVE DATA !!!!!!! ',value)
-    console.log('EVENT: ',event)
+    //console.log('WE HAVE DATA !!!!!!! ',value)
+    //console.log('EVENT: ',event)
 
     if(value.message == 'Requested market data is not subscribed. Displaying delayed market data.' != -1) {
       return
